@@ -50,8 +50,8 @@ Notification is also a form of communication. So how should one decide when to t
 ---
 
 # A real life implementation example
-![image](https://github.com/yakshaG/open-notification-protocol/assets/26523871/a0baeef5-ad68-44d0-84f7-b6fac4a959ae)
 
+![image](https://github.com/yakshaG/open-notification-protocol/assets/26523871/9323ede9-7c4c-442d-9da5-559c5b471d85)
 
 ---
 
