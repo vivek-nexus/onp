@@ -22,7 +22,7 @@ Email is meant for communication, not to deliver notifications. Email overload i
 There is no foolproof way for services to deliver notifications to a user, when the user is off their app/website/platform. Communication channels like email/SMS are abused as fallback.
 
 🤩 **Make notifications useful again.**
-Potential to synchronise `on platform` and `off platform` notifications, reducing notification overload. Both users and notification publishers benefit from using a better channel optimised for notifications.
+Synchronise `on platform` and `off platform` notifications, reducing notification overload. Both users and notification publishers benefit from using a better channel optimised for notifications.
 
 #### Examples of notifications overloading work email
 
@@ -108,35 +108,40 @@ Notification is also a form of communication. So how should one decide when to t
 
 ## Notification publishers
 
-To create, update or delete notifications, notification publishers call the receiver's domain on port `23456`
+To create or update notifications, notification publishers call the receiver's domain at https://onp.receiver-domain.com. Domain will be deduced from the notification address of the receiver(user).
 
-| Field             | Description                                                                                                                                                                                                                         | Default value assumed   | Cached? |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- | ------- |
-| Notification UUID | Unique identifier for the notification                                                                                                                                                                                              | -                       | No      |
-| Sender            | notification address of the sender                                                                                                                                                                                                  | -                       | -       |
-| Recipient         | notification address of the receiver                                                                                                                                                                                                | -                       |         |
-| Read              | To signify the read/unread status of the notification                                                                                                                                                                               | unread                  | -       |
-| Update type       | `create` when the notification is created for the first time, <br /> `update` when the notification has to be updated                                                                                                               | -                       | -       |
-| Title             | Notification title                                                                                                                                                                                                                  | -                       | -       |
-| Message           | Notification message                                                                                                                                                                                                                | -                       | -       |
-| Small icon URI    | URI or filename of image for small icon (status bar), monochrome                                                                                                                                                                    | cached value, if present | Yes     |
-| Large icon URI    | URI or filename of image for large icon, may not show if a picture is used, default is none                                                                                                                                         | cached value, if present | Yes     |
-| Accent colour      | Accent colour for the notification, system may adjust, default is system default                                                                                                                                                     | system default          | Yes     |
-| Picture URI       | URI or filename of image for "big picture style" notification, may hide large icon, default is none                                                                                                                                 | none                    | Yes     |
-| Person URI        | Contact, mailto:, tel: or name: URI of person relevant to this notification.                                                                                                                                                        | -                       | No      |
-| Confidential      | Whether to only show the notification on secure screens                                                                                                                                                                             | no                      | -       |
-| Category          | Notification category                                                                                                                                                                                                               | -                       | -       |
-| Created at        | Unix timestamp when the notification was created                                                                                                                                                                                    | -                       | -       |
-| Updated at        | Unix timestamp when the notification was last updated                                                                                                                                                                               | -                       | -       |
-| Importance        | To determine the priority with respect to other notifications user receives                                                                                                                                                         | Low                     | -       |
-| Action buttons    | Array of action buttons. Each button is `primary`, `secondary` or `tertiary`. Buttons must have default URI and optionally platform specific URIs. A click on any action button should trigger a `read` feedback to the subscriber. | -                     | -       |
+| Field             | Description                                                                                                                                                                                                                         | Default value assumed    | Cached? | Can be updated |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | ------- | -------------- |
+| Notification UUID | Unique identifier for the notification                                                                                                                                                                                              | -                        | No      | No             |
+| Sender            | notification address of the sender                                                                                                                                                                                                  | -                        | -       | No             |
+| Receiver          | notification address of the receiver                                                                                                                                                                                                | -                        |         | No             |
+| Read status       | To signify the read/unread status of the notification                                                                                                                                                                               | unread                   | -       | Yes            |
+| Update type       | `create` when the notification is created for the first time, <br /> `update` when the notification has to be updated                                                                                                               | create                   | -       | Yes            |
+| Title             | Notification title                                                                                                                                                                                                                  | -                        | -       | Yes            |
+| Message           | Notification message                                                                                                                                                                                                                | -                        | -       | Yes            |
+| Small icon URI    | URI or filename of image for small icon (status bar), monochrome                                                                                                                                                                    | cached value, if present | Yes     | Yes            |
+| Large icon URI    | URI or filename of image for large icon, may not show if a picture is used, default is none                                                                                                                                         | cached value, if present | Yes     | Yes            |
+| Accent color      | Accent colour for the notification, system may adjust, default is system default                                                                                                                                                    | system default           | Yes     | Yes            |
+| Picture URI       | URI or filename of image for "big picture style" notification, may hide large icon, default is none                                                                                                                                 | none                     | Yes     | Yes            |
+| Person URI        | Contact, mailto:, tel: or name: URI of person relevant to this notification.                                                                                                                                                        | -                        | No      | Yes            |
+| Confidential      | Whether to only show the notification on secure screens                                                                                                                                                                             | no                       | -       | Yes            |
+| Category          | Notification category                                                                                                                                                                                                               | -                        | -       | Yes            |
+| Created at        | Unix timestamp when the notification was created                                                                                                                                                                                    | -                        | -       | No             |
+| Updated at        | Unix timestamp when the notification was last updated                                                                                                                                                                               | -                        | -       | Yes            |
+| Importance        | To determine the priority with respect to other notifications user receives                                                                                                                                                         | Low                      | -       | Yes            |
+| Action buttons    | Array of action buttons. Each button is `primary`, `secondary` or `tertiary`. Buttons must have default URI and optionally platform specific URIs. A click on any action button should trigger a `read` feedback to the subscriber. | Low                      | -       | Yes            |
 
 
 ## Notification receiver
-Notification receivers can provide feedback to the publisher about a notification, based on user actions, by calling the publisher's domain on port  `23457`
-| Field             | Description                                           |
-| ----------------- | ----------------------------------------------------- |
-| Notification UUID | Unique identifier for the notification                |
-| Read              | To signify the read/unread status of the notification |
+Notification receivers can provide feedback to the publisher about a notification, based on user actions, by calling the publisher's domain at `https://onp.publisher-domain.com`. Domain will be deduced from the `notification address` of the sender(publisher).
+
+| Field                 | Description                                           |
+| --------------------- | ----------------------------------------------------- |
+| Notification UUID     | Unique identifier for the notification                |
+| Read status           | To signify the read/unread status of the notification |
+| Action button clicked | Details of the action button clicked                  |
+
+Based on the feedback, if the notification needs to updated, the subscriber can respond with updated notification parameters. Response is mandatory, if the `Read status` parameter is present in the feedback.
+
 ---
 
