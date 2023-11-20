@@ -76,18 +76,18 @@ Notification is also a form of communication. So how should one decide when to t
 
 1. Anjali signs up on Medium
 2. During on boarding/sign up, Medium asks Anjali to choose a notification delivery channel. The options could be
-	1. Spam my email
-	2. Google notifications(assuming Anjali's email provider is Google and Google has implemented ONP)
+	1. Piggyback my email
+	2. Google notifications(let's assume Anjali's email provider is Google and Google has implemented ONP)
 		1. This option cannot be shown if Google has not implemented ONP
 	3. Enter `notification address`
 
-#### Anjali selects Google notifications
+#### 1.1 Anjali selects Google notifications
 1. Since the email provider, Google, has implemented ONP, the `notification address` is set equal to the email address.
-2. A test notification(could be packaged as a welcome notification) is sent to the notification address, with an OTP by Medium. If the notification address works well, then Anjali should see this on her Google notifications app/web app etc.
-	1. Why this test notification and OTP?
+2. A test notification(could be packaged as a welcome notification) is sent to the notification address, by Medium. The notification has a button that allows Anjali to confirm that she has seen the test notification. If the notification address works well, then Anjali should see this on her Google notifications app/web app etc.
+	1. Why this test notification?
 		1. To educate Anjali about the new concept of dedicated notification channel
 		2. To ensure that the email provider has indeed implemented ONP and notifications can be positively delivered
-3. If the notification was successfully received, then Anjali sees the OTP from the notification and enters it on the Medium on boarding flow.
+3. If the notification was successfully received, then Anjali sees the the notification and clicks the confirmation button.
 4. Medium on boarding flow continues. Medium sends `off platform` notifications to Anjali via Google notifications, instead of email. These `off platform` notifications will work in tandem with Medium `on platform` notifications(in app, website) to prevent duplicate notifications for Anjali.
 
 #### Anjali selects `Enter notification address`
@@ -116,7 +116,7 @@ To create or update notifications, notification publishers call the receiver's d
 | Sender            | notification address of the sender                                                                                                                                                                                                  | -                        | -       | No             |
 | Receiver          | notification address of the receiver                                                                                                                                                                                                | -                        |         | No             |
 | Read status       | To signify the read/unread status of the notification                                                                                                                                                                               | unread                   | -       | Yes            |
-| Update type       | `create` when the notification is created for the first time, <br /> `update` when the notification has to be updated                                                                                                               | create                   | -       | Yes            |
+| Update type       | `create` when the notification is created for the first time, <br /> `update` when the notification has to be updated, <br /> `delete` when the notification has to be deleted                                                                                                               | create                   | -       | Yes            |
 | Title             | Notification title                                                                                                                                                                                                                  | -                        | -       | Yes            |
 | Message           | Notification message                                                                                                                                                                                                                | -                        | -       | Yes            |
 | Small icon URI    | URI or filename of image for small icon (status bar), monochrome                                                                                                                                                                    | cached value, if present | Yes     | Yes            |
@@ -141,7 +141,13 @@ Notification receivers can provide feedback to the publisher about a notificatio
 | Read status           | To signify the read/unread status of the notification |
 | Action button clicked | Details of the action button clicked                  |
 
-Based on the feedback, if the notification needs to updated, the subscriber can respond with updated notification parameters. Response is mandatory, if the `Read status` parameter is present in the feedback.
+Based on the feedback, if the notification needs to updated, the subscriber can respond with updated notification parameters.
+
+
+## Peripheral APIs
+### ONP support check API
+
+### User notification address check API
 
 ---
 
