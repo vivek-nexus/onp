@@ -4,7 +4,7 @@
 
 ### Watch ONP video for a non technical explanation https://youtu.be/dnvcxz2KsgU
 <a href="https://youtu.be/dnvcxz2KsgU" target="_blank">
-<img src="https://github.com/yakshaG/onp/assets/26523871/642137e2-85bf-453c-8b58-6ab51bd13ee3" />
+<img src="https://github.com/vivek-nexus/onp/assets/26523871/642137e2-85bf-453c-8b58-6ab51bd13ee3" />
 </a>
 
 
